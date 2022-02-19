@@ -17,7 +17,7 @@ The model deployment framework (MDF) is developed and published by
 
 ## Usage of the battery model
 
-We are very happy if you choose this model implementation and auxiliaries for your projects and provide all updates under GNU LESSER GENERAL PUBLIC LICENSE Version 3 (29 June 2007).
+We are very happy if you choose this framework for your projects and provide all updates under GNU LESSER GENERAL PUBLIC LICENSE Version 3 (29 June 2007).
 Please refer to the license file for any further questions about incorporating this battery model into your projects.
 We are looking forward to hearing your feedback and kindly ask you to share bugfixes, improvements and updates on the parameterization or implementation.
 
@@ -61,25 +61,23 @@ BaSyTec configuration:
       - Open DLL-file from implementation/auxiliaries/cdf/DCFC_Test_Bench.dll
       - Adjust Prefix to a desired *TEST_BENCH_NR* (e.g., "1_")
       - Confirm and reboot BaSyTec software
-      - Replace all occurence of "Device=" to the used CAN interface to cycler hardware number (e.g., "Device=HW345405" for our IXXAT USB-to-CAN compact interface)
+      - Replace all occurences of "Device=" to the used CAN interface to cycler hardware number (e.g., "Device=HW345405" for our IXXAT USB-to-CAN compact interface)
 
 Embedded hardware configuration:
-1.  Generate a Matlab/Simulink executable and replace it in your repository
+1.	Flash the embedded hardware with the customized Linux OS image (e.g., with BalenaEtcher) via https://github.com/mathworks/Raspbian_OS_Setup/releases/download/R20.2.3/mathworks_raspbian_R20.2.3.zip 
+2.  Boot the embedded hardware, connect it to the internet and log in with your credentials
+3.  Clone the underlying repository by executing `git clone ea_battery_mdf https://github.com/TUMFTM/EA_Battery_MDF.git`
+4.  Generate a Matlab/Simulink executable
       - Open the file *model/spmet_realtime.slx*
-      - Adjust the model block as you desire
-      - Build standalone in the *Hardware* tab and do not close the code generation report after completion
-      - In Matlab/Simulink, download the customized Linux OS image "Mathworks Raspbian R19.2.0.zip" via hardware/hardware board/setup hardware/Raspberry Pi 3 Model B+, next, select "I want to Setup Hardware with MathWorks Raspbian image", next, and download the image.
+      - Adjust the model block as you desire.
+      - Adjust building options in Matlab/Simulink via Configuration/Hardware implementation/Hardware board settings/Target hardware resources/Build options/Build directory and add the correct path `/home/pi/ea_battery_modeldeploymentframework/raspi_implementation/model_builds/[your elf file].elf`
+      - Build standalone (ELF) in the *Hardware* tab and do not close the code generation report after completion for reference.
       - Adjust *NAME_OF_ELF* in *configuration.py*. For this, copy the name of the executable from the top of the build report and paste it in *configuration.py*.
-      - Copy the generated executable .elf file to your repository for later usage
-2.	Flash the embedded hardware with the previously downloaded customized Linux OS image (e.g., with balenaEtcher)
-3.  Boot the embedded hardware, connect it to the internet and log in with your credentials
-4.  Clone the underlying repository by executing `git clone ea_battery_mdf https://github.com/TUMFTM/EA_Battery_MDF.git`
-5.  Modify the configuration file by executing `sudo nano /home/pi/ea_battery_mdf/implementation/auxiliaries/configuration.py`
+5.  Modify the configuration file by executing `sudo nano /home/pi/ea_battery_mdf/implementation/auxiliaries/configuration.py`.
       - Change the *TEST_BENCH_NR* in code line 5 to a value between 1-6 if there are multiple MCUs connected to the same CAN-bus.
-6.  Modify the embedded hardware configuration file by executing `sudo nano /home/pi/ea_battery_modeldeploymentframework/raspi_implementation/auxiliaries/pi.sh`
-      - Change the proxy *x* in *ssid=DCFC Test bench x* in line 43 to the number you assigned in the last step.
-7.  Run the configuration by executing `sudo bash /home/pi/ea_battery_modeldeploymentframework/raspi_implementation/auxiliaries/pi.sh`
-8.  Execute `sudo chmod a+x /home/pi/ea_battery_modeldeploymentframework/raspi_implementation/model_builds/[your elf file].elf`
+6.  Modify the embedded hardware configuration file by executing `sudo nano /home/pi/ea_battery_modeldeploymentframework/raspi_implementation/auxiliaries/pi.sh`.
+      - Change the proxy *x* in *ssid=DCFC Test bench x* in line 43 to the number of the test bench you assigned in the last step.
+7.  Run the automated configuration by executing `sudo bash /home/pi/ea_battery_modeldeploymentframework/raspi_implementation/auxiliaries/pi.sh`.
 8.  Perform a reboot by executing "sudo reboot". The setup is now complete.
 9.  Check setup by starting/stopping the main file.
       - "Start" - Restarts the main-file during runtime.
