@@ -9,7 +9,7 @@ The model deployment framework (MDF) is developed and published by
 [Nikolaos Wassiliadis](mailto:nikolaos.wassiliadis@tum.de),<br/>
 **[Institute of Automotive Technology](https://www.mos.ed.tum.de/mos/startseite/)**,<br/>
 **[Technical University of Munich, Germany](https://www.tum.de/nc/en/)**,<br/>
-[DOI will follow with publication].
+https://doi.org/10.1016/j.jpowsour.2022.232586.
 
 ## Features
 - One-stop toolchain for deployment of Matlab/Simulink-based lithium-ion battery models in real-time in a lab environment
